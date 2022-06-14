@@ -1,0 +1,40 @@
+node
+{
+def mavenhome = tool name: "maven3.6.3"
+properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
+
+stage('checkoutcode'){
+git branch: 'development', credentialsId: '5fb57965-1fd3-4af5-8934-13a6d52c39d3', url: 'https://github.com/nagarajtechnologies/maven-web-application.git'
+
+}
+
+stage('build')
+{
+sh "${mavenhome}/bin/mvn clean package"
+}
+
+stage('executesonarqreports')
+{
+sh "${mavenhome}/bin/mvn sonar:sonar"
+}
+
+stage('uploadartifactintonexus')
+{
+sh "${mavenhome}/bin/mvn deploy"
+}
+
+stage('deployappintotomcatserver')
+{
+ sshagent(['7790d7fd-4e3c-4449-b545-20ddfaca533a']) {
+ sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@3.6.88.116:/opt/apache-tomcat-9.0.63/webapps/"
+}
+}
+stage('sendingmailsnotifications')
+{
+emailext body: '''BuildComplete
+
+Regards
+NagarajTechnos''', subject: 'buildover', to: 'nagarajsadhu.aws@gmail.com'
+}
+
+}
