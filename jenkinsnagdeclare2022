@@ -1,0 +1,75 @@
+pipeline
+{
+  agent any
+  
+  triggers{
+
+	 pollSCM('* * * * *')
+	}
+
+options
+{   timestamps()
+	buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))
+
+}
+  
+tools{
+	maven "maven3.6.3"
+	}
+stages{
+	stage('checkoutcode')
+
+	{
+		steps
+		{
+		git branch: 'development', credentialsId: '5fb57965-1fd3-4af5-8934-13a6d52c39d3', url: 'https://github.com/nagarajtechnologies/maven-web-application.git'
+		}
+	}
+	stage('build')
+	{
+		steps{
+			sh "mvn clean package"
+		     }
+	}
+	
+	stage('execsonarqubereports')
+	{
+		steps{
+			sh "mvn clean sonar:sonar"
+			}
+	}
+	stage('uploadartifactsintonexus')
+	{
+		steps{
+			sh "mvn clean deploy"
+			}
+
+}
+    stage('deployappintotomcat')
+	{
+		steps{
+			sshagent(['7790d7fd-4e3c-4449-b545-20ddfaca533a']) {
+    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.127.76.214:/opt/apache-tomcat-9.0.63/webapps/"
+			}
+	}
+}
+}
+
+post{
+ 		success{
+				emailext body: '''Build Over - success
+
+				Regards
+				NagarajTechies''', subject: 'build over', to: 'nagarajsadhu.aws@gmail.com'	
+			
+			}
+		failure{
+			
+				emailext body: '''Build Over - failure
+
+				Regards
+				NagarajTechies''', subject: 'build over', to: 'nagarajsadhu.aws@gmail.com'
+			}
+}		
+
+}
