@@ -32,7 +32,7 @@ stages{
 		     }
 	}
 	
-	stage('execsonarqubereports')
+   /*     stage('execsonarqubereports')
 	{
 		steps{
 			sh "mvn clean sonar:sonar"
@@ -52,7 +52,8 @@ stages{
     sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.127.76.214:/opt/apache-tomcat-9.0.63/webapps/"
 			}
 	}
-}
+} */
+ 
 }
 
 post{
