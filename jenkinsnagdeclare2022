@@ -13,9 +13,9 @@ options
 
 }
   
-tools{
+/* tools{
 	maven "maven3.6.3"
-	}
+	} */
 stages{
 	stage('checkoutcode')
 
