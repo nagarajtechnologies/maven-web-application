@@ -58,7 +58,7 @@ stages{
 
 post{
  		success{
-				emailext body: '''Build Over - successssss
+				emailext body: '''Build Over - succed
 
 				Regards
 				NagarajTechies''', subject: 'build over', to: 'nagarajsadhu.aws@gmail.com'	
