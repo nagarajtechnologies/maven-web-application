@@ -66,7 +66,7 @@ post{
 			}
 		failure{
 			
-				emailext body: '''Build Over - failuurre
+				emailext body: '''Build Over - failuurreee
 
 				Regards
 				NagarajTechies''', subject: 'build over', to: 'nagarajsadhu.aws@gmail.com'
