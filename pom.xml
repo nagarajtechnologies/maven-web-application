@@ -5,7 +5,7 @@
 	<groupId>com.mt</groupId>
 	<artifactId>maven-web-application</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1.0</version>
 	
 	<name>maven-web-application</name>
 
@@ -21,15 +21,33 @@
 		<spring.version>5.1.2.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<log4j.version>1.2.17</log4j.version>
-		<!-- <sonar.host.url>http://13.232.5.182:9000/</sonar.host.url>
-		<sonar.login>admin</sonar.login>
-		<sonar.password>admin</sonar.password> -->
+		 <sonar.host.url>http://13.232.107.60:9000</sonar.host.url>
+		<sonar.login>05f51c27c355647d1666fdca97eeeb94ac3bec3b</sonar.login>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 	</properties>
 
+<repositories>
+
+   <repository>
+
+		<id>nexus</id>
+		<name>remo repo</name>
+		<url>http://65.1.93.248:9980/nagarajtechies/repository/maven-grouprepo/</url>
+		
+	</repository>
+	
+</repositories> 
+
+
 	<dependencies>
+
+		 <dependency>
+  			<groupId>com.nss</groupId>
+ 			 <artifactId>mail</artifactId>
+  			<version>1.0.0</version>
+			</dependency>
 		
 		<dependency>
 			<groupId>org.json</groupId>
@@ -97,14 +115,14 @@
 	
 	    <repository>
 	      <id>nexus</id>
-	      <name>Mithun Technologies Releases Nexus Repository</name>
-	      <url>http://54.255.174.111:8081/repository/flipkart-release/</url>
+	      <name>flipkary release repo</name>
+	      <url>http://65.1.93.248:9980/nagarajtechies/repository/flipkary-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
-	      <name>Mithun Technologies Snapshot Nexus Repository </name>
-	      <url>http://54.255.174.111:8081/repository/flipkart-snapshot/</url>
+	      <name>flipkary snapshot repo</name>
+	      <url>http://65.1.93.248:9980/nagarajtechies/repository/flipkary-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
